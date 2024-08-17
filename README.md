@@ -1,5 +1,19 @@
 # Continuous- and discrete-time vision-based SLAM
 
+## Fork原因及更改内容
+
+由于该库使用了一些当前版本环境会报错的内容，对一些函数进行了修改（主要是yaml文件和python代码）。目前该代码在修改后可以正常运行EuRoC数据集上的内容，但是UZH_FPV数据集由于yaml文件 `indoor_forward_3_snapdragon.yaml` 没有正确的 `init_t_offset_cam_gp` 参数而无法运行[[ISSUE]](https://github.com/uzh-rpg/rpg_vision-based_slam/issues/2)。
+
+### 环境版本
+
+cuda 11.4（重要，亲测使用12.3版本会使colmap无法正确使用gpu）
+ros noetic
+ubuntu 20.04
+ceres-solver 2.1.0
+colmap 3.10
+
+## 原README内容
+
 [![Continuous- and discrete-time vision-based SLAM](img/intro_github.png)](https://www.youtube.com/watch?v=_yuZmzJoWUc)
 <!--<p style="text-align:center;"> <img src="img/intro.png" alt="RAL2021_Cioffi" width="700" height="300"/>-->
 
