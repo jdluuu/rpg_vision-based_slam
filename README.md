@@ -2,11 +2,12 @@
 
 ## Fork原因及更改内容
 
-由于该库使用了一些当前版本环境会报错的内容，对一些函数进行了修改（主要是yaml文件和python代码）。目前该代码在修改后可以正常运行EuRoC数据集上的内容，但是UZH_FPV数据集由于yaml文件 `indoor_forward_3_snapdragon.yaml` 没有正确的 `init_t_offset_cam_gp` 参数而无法运行[[ISSUE]](https://github.com/uzh-rpg/rpg_vision-based_slam/issues/2)。
+由于该库使用了一些当前版本环境会报错的内容，对一些函数进行了修改（主要是yaml文件和python代码，应注意，由于原代码没有实现相对路径，且本代码也没有替他实现，在使用本代码时仍然需要手动修改部分yaml文件中的路径）。目前该代码在修改后可以正常运行EuRoC数据集上的内容，但是UZH_FPV数据集由于yaml文件 `indoor_forward_3_snapdragon.yaml` 没有正确的 `init_t_offset_cam_gp` 参数而无法运行[[ISSUE]](https://github.com/uzh-rpg/rpg_vision-based_slam/issues/2)。
 
 ### 环境版本
 
-cuda 11.4（重要，亲测使用12.3版本会使colmap无法正确使用gpu）
+cuda 11.4（重要，亲测使用12.3版本会使colmap无法正确使用gpu，速度会慢特别多甚至无法运行）
+python 3.8（重要，原代码部分代码风格为python2，无法正确运行）
 ros noetic
 ubuntu 20.04
 ceres-solver 2.1.0
