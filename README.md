@@ -115,7 +115,7 @@ Run full-batch optimization:
 
 ```./optimize_discrete_time $CONFIG_FILE$```
 
-## Example: UZH-FPV dataset
+## Example: UZH-FPV dataset (Cannot run because [[ISSUE]](https://github.com/uzh-rpg/rpg_vision-based_slam/issues/2))
 
 We give here an example on how to run the continuous-time SLAM formulation on the sequence **indoor forward facing 3 snapdragon** of the [UZH FPV dataset](https://fpv.ifi.uzh.ch/).
 
@@ -167,6 +167,8 @@ Prepare Leica measurements:
 
 ```./fit_spline_to_colmap ../experiments/UZH_FPV/indoor_forward_3_snapdragon/colmap_fitted_spline/indoor_forward_3_snapdragon.yaml```
 
+**【注意】** UZH_FPV数据集就是这里跑不通，有人提了issue也没有修复。
+
 ```python ../scripts/python/initialize_spline_to_global_frame_spatial_alignment_uzhfpv.py --config ../experiments/UZH_FPV/indoor_forward_3_snapdragon/spline_global_alignment/indoor_forward_3_snapdragon.yaml --env=i --cam=fw --nr=3 --sens=snap --gui```
 
 ```./align_spline_to_global_frame ../experiments/UZH_FPV/indoor_forward_3_snapdragon/spline_global_alignment/indoor_forward_3_snapdragon.yaml```
@@ -207,6 +209,8 @@ Create the folder ***rpg_vision-based_slam/datasets/EuRoC/V2_01_easy***.
 
 Download the [rosbag](http://robotics.ethz.ch/~asl-datasets/ijrr_euroc_mav_dataset/vicon_room2/V2_01_easy/V2_01_easy.bag) in this folder. Use the following script to extract the data:
 
+**【注意】**，除了他说的[rosbag](http://robotics.ethz.ch/~asl-datasets/ijrr_euroc_mav_dataset/vicon_room2/V2_01_easy/V2_01_easy.bag)，还需要下载ASL格式数据集包，会使用其中的ground truth csv文件。具体放的位置为***rpg_vision-based_slam/datasets/EuRoC/V2_01_easy/state_groundtruth_estimate0/data.csv***
+
 ```python scripts/python/extract_from_euroc_rosbag.py --room=V2 --nr=1 --cam=right```
 
 The file ***datasets/EuRoC/calib/Vicon_room/calib.yaml*** contains the calibration file for this sequence.
@@ -224,6 +228,8 @@ Extract COLMAP estimated trajectory:
 ```python scripts/python/extract_traj_estimate_from_colmap_euroc.py --room=V2 --nr=1 --cam=right --colmap_model_id=0```
 
 Create global positional measurements from the ground truth:
+
+**【注意】** 就是这里，如果不下载ASL格式包，不会有groundtruth文件。
 
 ```python scripts/python/extract_euroc_groundtruth.py --room=V2 --nr=1```
 
