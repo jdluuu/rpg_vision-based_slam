@@ -7,10 +7,15 @@
 ### 环境版本
 
 cuda 11.4（重要，亲测使用12.3版本会使colmap无法正确使用gpu，速度会慢特别多甚至无法运行）
+
 python 3.8（重要，原代码部分代码风格为python2，无法正确运行）
+
 ros noetic
+
 ubuntu 20.04
+
 ceres-solver 2.1.0
+
 colmap 3.10
 
 ## 原README内容
