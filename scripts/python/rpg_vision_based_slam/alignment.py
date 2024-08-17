@@ -7,7 +7,6 @@ This file is subject to the terms and conditions defined in the file
 'LICENSE', which is part of this source code package.
 '''
 
-
 # This script has been adapted from: https://github.com/uzh-rpg/uzh_fpv/blob/full-batch-optimization/python/uzh_fpv_open/calibration.py
 
 import numpy as np
@@ -34,10 +33,7 @@ def associateTimestamps(first_stamps, second_stamps, offset=0.0, max_difference=
     Output:
     sorted list of matches (match_first_idx, match_second_idx)
     """
-    potential_matches = [(abs(a - (b + offset)), idx_a, idx_b)
-                         for idx_a, a in enumerate(first_stamps)
-                         for idx_b, b in enumerate(second_stamps)
-                         if abs(a - (b + offset)) < max_difference]
+    potential_matches = [(abs(a - (b + offset)), idx_a, idx_b) for idx_a, a in enumerate(first_stamps) for idx_b, b in enumerate(second_stamps) if abs(a - (b + offset)) < max_difference]
     potential_matches.sort()  # prefer the closest
 
     matches = []
@@ -77,14 +73,14 @@ def alignUmeyama(model, data, known_scale=False, yaw_only=False):
     n = np.shape(model)[0]
 
     # correlation
-    C = 1.0/n*np.dot(model_zerocentered.transpose(), data_zerocentered)
-    sigma2 = 1.0/n*np.multiply(data_zerocentered, data_zerocentered).sum()
+    C = 1.0 / n * np.dot(model_zerocentered.transpose(), data_zerocentered)
+    sigma2 = 1.0 / n * np.multiply(data_zerocentered, data_zerocentered).sum()
     U_svd, D_svd, V_svd = np.linalg.linalg.svd(C)
     D_svd = np.diag(D_svd)
     V_svd = np.transpose(V_svd)
 
     S = np.eye(3)
-    if(np.linalg.det(U_svd)*np.linalg.det(V_svd) < 0):
+    if (np.linalg.det(U_svd) * np.linalg.det(V_svd) < 0):
         S[2, 2] = -1
 
     if yaw_only:
@@ -97,9 +93,8 @@ def alignUmeyama(model, data, known_scale=False, yaw_only=False):
     if known_scale:
         s = 1
     else:
-        s = 1.0/sigma2*np.trace(np.dot(D_svd, S))
+        s = 1.0 / sigma2 * np.trace(np.dot(D_svd, S))
 
-    t = mu_M-s*np.dot(R, mu_D)
+    t = mu_M - s * np.dot(R, mu_D)
 
     return s, R, t
-

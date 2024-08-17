@@ -33,8 +33,7 @@ def run():
     g_meas_fn = configs['gp_fn']
     order = str(configs['spline_order'])
     spline_knot_dt = str(int(1000 * configs['spline_control_nodes_dt_s']))
-    spline_fn = os.path.join(configs['colmap_spline_dir'], 
-        'order_' + order + '/dt_' + spline_knot_dt + '_ms/spline.txt')
+    spline_fn = os.path.join(configs['colmap_spline_dir'], 'order_' + order + '/dt_' + spline_knot_dt + '_ms/spline.txt')
     res_dir = configs['spline_global_ref_alignment_dir']
     res_dir += '/order_' + order + '/dt_' + spline_knot_dt + '_ms'
     if not os.path.exists(res_dir):
@@ -47,9 +46,9 @@ def run():
 
     # downsample to 20 Hz
     dt = 0.050
-    if ( (g_ts[1] - g_ts[0]) < (dt - 0.001) ):
+    if ((g_ts[1] - g_ts[0]) < (dt - 0.001)):
         t_k = g_ts[0]
-        
+
         g_ts_sampled = []
         g_pos_sampled = []
         g_ts_sampled.append(t_k)
@@ -69,7 +68,7 @@ def run():
     spline_pos = spline[:, 1:4]
 
     # Plots
-    if(FLAGS.gui):
+    if (FLAGS.gui):
         plt.figure(0)
         plots.xyPlot('Before initial alignment', g_pos[:, 0:2], 'global measurements', spline_pos[:, 0:2], 'spline')
         plt.show()
@@ -79,6 +78,9 @@ def run():
     init_t_offset = configs['init_t_offset_cam_gp']
     print('Using initial time offset: %.3f' % init_t_offset)
     g_ts_aligned = np.asarray([t - init_t_offset for t in g_ts])
+
+    import ipdb
+    ipdb.set_trace()
 
     idx_t_matches = alignment.associateTimestamps(spline_ts, g_ts_aligned)
     idx_t_spline = [idx[0] for idx in idx_t_matches]
@@ -101,7 +103,7 @@ def run():
     print(T_wg.asArray())
     print('scale: %.3f' % scale)
 
-    if(FLAGS.gui):
+    if (FLAGS.gui):
         spline_pos_aligned = np.asarray([scale * np.dot(T_wg.R, p) + T_wg.t.ravel() for p in spline_pos])
         plt.figure(1)
         plots.xyPlot('After initial alignment', g_pos[:, 0:2], 'global measurements', spline_pos_aligned[:, 0:2], 'spline')
@@ -110,8 +112,7 @@ def run():
 
 if __name__ == '__main__':
     sys.argv = flags.FLAGS(sys.argv)
-    if(FLAGS.gui):
+    if (FLAGS.gui):
         import rpg_vision_based_slam.plots as plots
         import matplotlib.pyplot as plt
     run()
-

@@ -2,12 +2,12 @@ dataset: UZH_FPV
 
 ## Files
 # Measurements
-colmap_dir: "/home/giovanni/rpg_vision-based_slam/datasets/UZH_FPV/colmap/indoor_forward_3_snapdragon/output/0/"
-gp_fn: "/home/giovanni/rpg_vision-based_slam/datasets/UZH_FPV/raw/indoor_forward_3/leica_minimal.txt"
+colmap_dir: "/home/jiadong/crepes/rpg_vision-based_slam/datasets/UZH_FPV/colmap/indoor_forward_3_snapdragon/output/0/"
+gp_fn: "/home/jiadong/crepes/rpg_vision-based_slam/datasets/UZH_FPV/raw/indoor_forward_3/leica_minimal.txt"
 
 # Results
-colmap_spline_dir: "/home/giovanni/rpg_vision-based_slam/results/UZH_FPV/indoor_forward_3_snapdragon/colmap_fitted_spline"
-spline_global_ref_alignment_dir: "/home/giovanni/rpg_vision-based_slam/results/UZH_FPV/indoor_forward_3_snapdragon/spline_global_alignment"
+colmap_spline_dir: "/home/jiadong/crepes/rpg_vision-based_slam/results/UZH_FPV/indoor_forward_3_snapdragon/colmap_fitted_spline"
+spline_global_ref_alignment_dir: "/home/jiadong/crepes/rpg_vision-based_slam/results/UZH_FPV/indoor_forward_3_snapdragon/spline_global_alignment"
 
 ## Parameters
 # spline

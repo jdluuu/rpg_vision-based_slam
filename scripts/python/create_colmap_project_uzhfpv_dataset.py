@@ -26,7 +26,7 @@ import rpg_vision_based_slam.uzhfpv_flags as uzhfpv_flags
 # Code from https://stackoverflow.com/questions/4813061/non-alphanumeric-list-order-from-os-listdir
 def sorted_alphanumeric(data):
     convert = lambda text: int(text) if text.isdigit() else text.lower()
-    alphanum_key = lambda key: [ convert(c) for c in re.split('([0-9]+)', key) ] 
+    alphanum_key = lambda key: [convert(c) for c in re.split('([0-9]+)', key)]
     return sorted(data, key=alphanum_key)
 
 
@@ -43,7 +43,7 @@ def run(img_folder):
     else:
         cam_idx = 1
     calibs = uzhfpv_util.readCamCalibration(cam_idx)
-    
+
     # Create config files for each COLMAP module
     # Module: Feature extractor
     feature_extractor_params = colmap_params.getFeatureExtractorParams()
@@ -56,6 +56,8 @@ def run(img_folder):
     "%.9f" % calibs.distortion.k[2] + ',' + "%.9f" % calibs.distortion.k[3]
     feature_extractor_params['ImageReader']['camera_params'] = camera_params_str
 
+    # import ipdb
+    # ipdb.set_trace()
     feature_extractor_config_fn = os.path.join(colmap_dir, 'feature_extractor_config.ini')
     util_colmap.write_feature_extractor_config(feature_extractor_params, feature_extractor_config_fn)
 
@@ -123,4 +125,3 @@ if __name__ == '__main__':
     img_folder = os.path.join(flags.datasetsPath(), uzhfpv_flags.unzippedGtRelativePath() + '/img')
     assert os.path.exists(img_folder), "Folder %s not found" % img_folder
     run(img_folder)
-

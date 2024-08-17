@@ -2,12 +2,12 @@ dataset: EuRoC
 
 ## Files
 # Measurements
-colmap_dir: "/home/giovanni/rpg_vision-based_slam/datasets/EuRoC/colmap/V2_01_easy/output/0/"
-gp_fn: "/home/giovanni/rpg_vision-based_slam/datasets/EuRoC/V2_01_easy/gp_measurements_freq_10.0_hz_std_0.10_m.txt"
+colmap_dir: "/home/jiadong/crepes/rpg_vision-based_slam/datasets/EuRoC/colmap/V2_01_easy/output/0/"
+gp_fn: "/home/jiadong/crepes/rpg_vision-based_slam/datasets/EuRoC/V2_01_easy/gp_measurements_freq_10.0_hz_std_0.10_m.txt"
 
 # Results
-colmap_spline_dir: "/home/giovanni/rpg_vision-based_slam/results/EuRoC/V2_01_easy/colmap_fitted_spline"
-spline_global_ref_alignment_dir: "/home/giovanni/rpg_vision-based_slam/results/EuRoC/V2_01_easy/spline_global_alignment"
+colmap_spline_dir: "/home/jiadong/crepes/rpg_vision-based_slam/results/EuRoC/V2_01_easy/colmap_fitted_spline"
+spline_global_ref_alignment_dir: "/home/jiadong/crepes/rpg_vision-based_slam/results/EuRoC/V2_01_easy/spline_global_alignment"
 
 ## Parameters
 # spline

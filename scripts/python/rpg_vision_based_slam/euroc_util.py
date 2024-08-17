@@ -13,25 +13,26 @@ import numpy as np
 import os
 import yaml
 
-import calibration
-import flags
-import euroc_flags
-import pose
+# import calibration
+# import flags
+# import euroc_flags
+# import pose
+
+import rpg_vision_based_slam.calibration as calibration
+import rpg_vision_based_slam.flags as flags
+import rpg_vision_based_slam.euroc_flags as euroc_flags
+import rpg_vision_based_slam.pose as pose
 
 
 def importCamI(y, i):
     y_cam = y['cameras'][i]
     T_B_C_arr = y_cam['T_B_C']['data']
-    T_B_C = pose.Pose( 
-        np.array([[T_B_C_arr[0], T_B_C_arr[1], T_B_C_arr[2]], 
-            [T_B_C_arr[4], T_B_C_arr[5], T_B_C_arr[6]], 
-            [T_B_C_arr[8], T_B_C_arr[9], T_B_C_arr[10]]]), 
-        np.array([T_B_C_arr[3], T_B_C_arr[7], T_B_C_arr[11]]).reshape(3,1) 
-        )
+    T_B_C = pose.Pose(np.array([[T_B_C_arr[0], T_B_C_arr[1], T_B_C_arr[2]], [T_B_C_arr[4], T_B_C_arr[5], T_B_C_arr[6]], [T_B_C_arr[8], T_B_C_arr[9], T_B_C_arr[10]]]),
+                      np.array([T_B_C_arr[3], T_B_C_arr[7], T_B_C_arr[11]]).reshape(3, 1))
     T_C_B = T_B_C.inverse()
     y_camcal = y_cam['camera']
     # timeshift not used here
-    timeshift_cam_imu = 0.0 
+    timeshift_cam_imu = 0.0
     dist = calibration.RadialTangentialDistortion(y_camcal['distortion']['parameters']['data'])
     intr = y_camcal['intrinsics']['data']
     shape = [y_camcal['image_height'], y_camcal['image_width']]
@@ -46,4 +47,3 @@ def readCamCalibration(cam_idx):
     calibs = importCamI(y, cam_idx)
     f_calib.close()
     return calibs
-

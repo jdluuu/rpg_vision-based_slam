@@ -1,22 +1,23 @@
 '''
-This file is part of RPG vision-based SLAM.
-Copyright (C) 2022 Giovanni Cioffi <cioffi at ifi dot uzh dot ch>
-(Robotics and Perception Group, University of Zurich, Switzerland).
+Author: Wtrwater 1921852290@qq.com
+Date: 2024-07-31 15:33:21
+LastEditors: Wtrwater 1921852290@qq.com
+LastEditTime: 2024-08-02 14:36:17
+FilePath: /rpg_vision-based_slam/scripts/python/rpg_vision_based_slam/uzhfpv_util.py
+Description: 
 
-This file is subject to the terms and conditions defined in the file
-'LICENSE', which is part of this source code package.
+Copyright (c) 2024 by ${git_name_email}, All Rights Reserved. 
 '''
-
 # This script has been adapted from: https://github.com/uzh-rpg/uzh_fpv_open/blob/master/python/uzh_fpv/flags.py
 
 import numpy as np
 import os
 import yaml
 
-import calibration
-import flags
-import uzhfpv_flags
-import pose
+import rpg_vision_based_slam.calibration as calibration
+import rpg_vision_based_slam.flags as flags
+import rpg_vision_based_slam.uzhfpv_flags as uzhfpv_flags
+import rpg_vision_based_slam.pose as pose
 
 
 def importCamI(y, i):
@@ -34,8 +35,7 @@ def readCamCalibration(cam_idx):
     calib_path = os.path.join(flags.datasetsPath(), uzhfpv_flags.calibRelativePath())
     f_calib = open(os.path.join(calib_path, 'camchain-imucam-..%s_calib_%s_imu.yaml' \
         % (uzhfpv_flags.envCamString(), uzhfpv_flags.sensorString())))
-    y = yaml.load(f_calib)
+    y = yaml.load(f_calib, Loader=yaml.FullLoader)
     calibs = importCamI(y, cam_idx)
     f_calib.close()
     return calibs
-

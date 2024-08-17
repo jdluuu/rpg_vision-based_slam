@@ -1,4 +1,14 @@
 '''
+Author: Wtrwater 1921852290@qq.com
+Date: 2024-07-31 15:33:21
+LastEditors: Wtrwater 1921852290@qq.com
+LastEditTime: 2024-08-17 16:02:04
+FilePath: /rpg_vision-based_slam/scripts/python/extract_from_euroc_rosbag.py
+Description: 
+
+Copyright (c) 2024 by ${git_name_email}, All Rights Reserved. 
+'''
+'''
 This file is part of RPG vision-based SLAM.
 Copyright (C) 2022 Giovanni Cioffi <cioffi at ifi dot uzh dot ch>
 (Robotics and Perception Group, University of Zurich, Switzerland).
@@ -36,25 +46,25 @@ def extract():
     f_img_right = open(os.path.join(seq_folder, 'right_images.txt'), 'w')
     f_img_right.write('# id timestamp image_name\n')
     f_imu = open(os.path.join(seq_folder, 'imu.txt'), 'w')
-    f_imu.write('# timestamp ang_vel_x ang_vel_y ang_vel_z lin_acc_x lin_acc_y lin_acc_z\n') 
+    f_imu.write('# timestamp ang_vel_x ang_vel_y ang_vel_z lin_acc_x lin_acc_y lin_acc_z\n')
 
     n_img_left = 0
     n_img_right = 0
     n_imu = 0
 
     cv_bridge = CvBridge()
-    
+
     bagfile = os.path.join(data_folder, seq_name + '.bag')
     with rosbag.Bag(bagfile, 'r') as bag:
         for (topic, msg, ts) in bag.read_messages():
             if topic == '/cam0/image_raw':
                 try:
                     img = cv_bridge.imgmsg_to_cv2(msg, 'bgr8')
-                except CvBridgeError, e:
-                    print e
-                    
+                except CvBridgeError as e:
+                    print(e)
+
                 ts = msg.header.stamp.to_sec()
-                img_name = 'image_0_'+str(n_img_left)+'.png'
+                img_name = 'image_0_' + str(n_img_left) + '.png'
                 f_img_left.write('%d %.12f img/%s \n' % (n_img_left, ts, img_name))
                 img_fn = os.path.join(img_folder, img_name)
                 cv2.imwrite(img_fn, img)
@@ -63,25 +73,21 @@ def extract():
             elif topic == '/cam1/image_raw':
                 try:
                     img = cv_bridge.imgmsg_to_cv2(msg, 'bgr8')
-                except CvBridgeError, e:
-                    print e
-                    
+                except CvBridgeError as e:
+                    print(e)
+
                 ts = msg.header.stamp.to_sec()
-                img_name = 'image_1_'+str(n_img_right)+'.png'
+                img_name = 'image_1_' + str(n_img_right) + '.png'
                 f_img_right.write('%d %.12f img/%s \n' % (n_img_right, ts, img_name))
                 img_fn = os.path.join(img_folder, img_name)
                 cv2.imwrite(img_fn, img)
                 n_img_right += 1
 
             elif topic == '/imu0':
-                f_imu.write('%d %.12f %.12f %.12f %.12f %.12f %.12f %.12f\n' % 
-                        (n_imu,
-                         msg.header.stamp.to_sec(),
-                         msg.angular_velocity.x, msg.angular_velocity.y, msg.angular_velocity.z,
-                         msg.linear_acceleration.x, msg.linear_acceleration.y, msg.linear_acceleration.z))
+                f_imu.write('%d %.12f %.12f %.12f %.12f %.12f %.12f %.12f\n' % (n_imu, msg.header.stamp.to_sec(), msg.angular_velocity.x, msg.angular_velocity.y, msg.angular_velocity.z,
+                                                                                msg.linear_acceleration.x, msg.linear_acceleration.y, msg.linear_acceleration.z))
                 n_imu += 1
-    
-    
+
     f_img_left.close()
     f_img_right.close()
     f_imu.close()
@@ -90,8 +96,7 @@ def extract():
     print('loaded ' + str(n_img_right) + ' right camera images')
     print('loaded ' + str(n_imu) + ' imu measurements')
 
-          
+
 if __name__ == '__main__':
     sys.argv = flags.FLAGS(sys.argv)
     extract()
-

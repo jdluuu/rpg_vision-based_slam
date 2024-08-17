@@ -1,9 +1,9 @@
 ## Files
 # Measurements
-colmap_fn: "/home/giovanni/rpg_vision-based_slam/datasets/EuRoC/colmap/V2_01_easy/output/0/colmap_body_estimates.txt"
+colmap_fn: "/home/jiadong/crepes/rpg_vision-based_slam/datasets/EuRoC/colmap/V2_01_easy/output/0/colmap_body_estimates.txt"
 
 # Results
-colmap_spline_dir: "/home/giovanni/rpg_vision-based_slam/results/EuRoC/V2_01_easy"
+colmap_spline_dir: "/home/jiadong/crepes/rpg_vision-based_slam/results/EuRoC/V2_01_easy"
 
 ## Parameters
 # groundtruth

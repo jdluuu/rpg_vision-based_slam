@@ -19,18 +19,17 @@ import rpg_vision_based_slam.euroc_util as euroc_util
 import rpg_vision_based_slam.util_colmap as util_colmap
 import rpg_vision_based_slam.euroc_flags as euroc_flags
 
-
 FLAGS = flags.FLAGS
 
 
 def run():
     # This script extracts camera traj estimates (=T_W_C) from COLMAP output.
     colmap_dir = os.path.join(flags.datasetsPath(), euroc_flags.colmapRelativePath())
-    if FLAGS.colmap_model_id == '0':
+    if FLAGS.colmap_model_id == 0:
         model_dir = os.path.join(colmap_dir, 'output/0')
-    if FLAGS.colmap_model_id == '1':
+    if FLAGS.colmap_model_id == 1:
         model_dir = os.path.join(colmap_dir, 'output/1')
-    else:        
+    else:
         assert os.path.exists(model_dir), 'Model %d not found' % FLAGS.colmap_model_id
 
     # Try to read colmap output from .bin
@@ -69,17 +68,17 @@ def run():
     T_W_C = []
     keys = np.asarray(colmap_output.keys())
 
-    for i in keys:
+    for i in keys.tolist():
         img_name = colmap_output[i].name
         idx = img_names.index(img_name)
         assert 0 <= idx < len(img_names)
 
         # timestamp
-        t = all_timestamps[idx] 
+        t = all_timestamps[idx]
         timestamps.append(t)
 
         # W: world, C: camera.
-        # colmap_output[i].tvec is t_C_W, 
+        # colmap_output[i].tvec is t_C_W,
         # colmap_output[i].qvec is q_C_W (= [qw,qx,qy,qz])
         t_C_W_i = colmap_output[i].tvec
         q_C_W_i = colmap_output[i].qvec
@@ -91,10 +90,10 @@ def run():
     # It might be that keys are not sorted
     if not np.all(np.diff(timestamps) >= 0):
         print('WARNING: COLMAP images are not sorted! Fixing it now ...')
-        n = 0 
+        n = 0
         for diff in np.diff(timestamps):
             if diff < 0:
-                n+=1
+                n += 1
         print('Found %d unorder images' % n)
     sorted_idxs = np.argsort(timestamps)
     timestamps = np.sort(timestamps)
@@ -115,4 +114,3 @@ def run():
 if __name__ == '__main__':
     sys.argv = flags.FLAGS(sys.argv)
     run()
-

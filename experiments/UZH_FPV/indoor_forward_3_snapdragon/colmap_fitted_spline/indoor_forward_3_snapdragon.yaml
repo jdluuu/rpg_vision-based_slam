@@ -1,9 +1,9 @@
 ## Files
 # Measurements
-colmap_fn: "/home/giovanni/rpg_vision-based_slam/datasets/UZH_FPV/colmap/indoor_forward_3_snapdragon/output/0/colmap_body_estimates.txt"
+colmap_fn: "/home/jiadong/crepes/rpg_vision-based_slam/datasets/UZH_FPV/colmap/indoor_forward_3_snapdragon/output/0/colmap_body_estimates.txt"
 
 # Results
-colmap_spline_dir: "/home/giovanni/rpg_vision-based_slam/results/UZH_FPV/indoor_forward_3_snapdragon"
+colmap_spline_dir: "/home/jiadong/crepes/rpg_vision-based_slam/results/UZH_FPV/indoor_forward_3_snapdragon"
 
 ## Parameters
 # groundtruth

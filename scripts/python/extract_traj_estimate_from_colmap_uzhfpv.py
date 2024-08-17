@@ -19,7 +19,6 @@ import rpg_vision_based_slam.uzhfpv_util as uzhfpv_util
 import rpg_vision_based_slam.util_colmap as util_colmap
 import rpg_vision_based_slam.uzhfpv_flags as uzhfpv_flags
 
-
 FLAGS = flags.FLAGS
 
 
@@ -27,6 +26,7 @@ def run():
     # This script extracts camera traj estimates (=T_W_C) from COLMAP output.
     colmap_dir = os.path.join(flags.datasetsPath(), uzhfpv_flags.colmapRelativePath())
     model_dir = os.path.join(colmap_dir, 'output/0')
+    print('Model dir:', model_dir)
     assert os.path.exists(model_dir), 'Model %d not found' % FLAGS.colmap_model_id
 
     # Try to read colmap output from .bin
@@ -63,19 +63,21 @@ def run():
     all_timestamps = np.asarray(all_timestamps)
     timestamps = []
     T_W_C = []
+    # import ipdb
+    # ipdb.set_trace()
     keys = np.asarray(colmap_output.keys())
 
-    for i in keys:
+    for i in keys.tolist():
         img_name = colmap_output[i].name
         idx = img_names.index(img_name)
         assert 0 <= idx < len(img_names)
 
         # timestamp
-        t = all_timestamps[idx] 
+        t = all_timestamps[idx]
         timestamps.append(t)
 
         # W: world, C: camera.
-        # colmap_output[i].tvec is t_C_W, 
+        # colmap_output[i].tvec is t_C_W,
         # colmap_output[i].qvec is q_C_W (= [qw,qx,qy,qz])
         t_C_W_i = colmap_output[i].tvec
         q_C_W_i = colmap_output[i].qvec
@@ -87,10 +89,10 @@ def run():
     # It might be that keys are not sorted
     if not np.all(np.diff(timestamps) >= 0):
         print('WARNING: COLMAP images are not sorted! Fixing it now ...')
-        n = 0 
+        n = 0
         for diff in np.diff(timestamps):
             if diff < 0:
-                n+=1
+                n += 1
         print('Found %d unorder images' % n)
     sorted_idxs = np.argsort(timestamps)
     timestamps = np.sort(timestamps)
@@ -116,4 +118,3 @@ def run():
 if __name__ == '__main__':
     sys.argv = flags.FLAGS(sys.argv)
     run()
-
